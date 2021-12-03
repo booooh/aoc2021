@@ -61,6 +61,7 @@ fn day2part1() -> Location {
     let mut location = Location {
         horizontal: 0,
         depth: 0,
+        aim: 0,
     };
     let commands: Vec<_> = lines.map(|l| parse_command(l.unwrap()).unwrap()).collect();
     for command in commands {
@@ -84,14 +85,18 @@ struct Command {
 struct Location {
     horizontal: i32,
     depth: i32,
+    aim: i32,
 }
 
 impl Location {
     fn process_command(mut self, command: &Command) -> Self {
         match command.direction {
-            Direction::Forward => self.horizontal = self.horizontal + command.units,
-            Direction::Down => self.depth = self.depth + command.units,
-            Direction::Up => self.depth = self.depth - command.units,
+            Direction::Forward => {
+                self.horizontal = self.horizontal + command.units;
+                self.depth = self.depth + self.aim * command.units
+            }
+            Direction::Down => self.aim = self.aim + command.units,
+            Direction::Up => self.aim = self.aim - command.units,
         }
         return self;
     }
