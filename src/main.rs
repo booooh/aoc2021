@@ -1,13 +1,26 @@
+mod day3;
+mod day4;
+mod day5;
+
+use day3::day3part1;
 use std::fmt::Debug;
 use std::io::BufRead;
 use std::{fs::File, io, path::Path};
+
+use crate::day3::day3part2;
+use crate::day4::{day4part1, day4part2};
+use crate::day5::day5part1;
 
 fn main() {
     // println!("day1part1 {}", day1part1());
     // println!("day1part2 {}", day1part2());
 
     // println!("day2part2 {:?}", day2part2());
-    println!("day3part1 {:?}", day3part1());
+    // println!("day3part1 {:?}", day3part1());
+    // println!("day3part2 {:?}", day3part2());
+    // println!("day4part1 {:?}", day4part1());
+    // println!("day4part2 {:?}", day4part2());
+    println!("day5part1 {:?}", day5part1());
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
@@ -114,61 +127,4 @@ fn parse_command(s: String) -> Result<Command, ()> {
 
     let units = x[1].parse().unwrap();
     Ok(Command { direction, units })
-}
-
-fn day3part1() -> (i32, i32) {
-    let lines = read_lines("input3.t").unwrap();
-    println!("read lines");
-    let binary_numbers: Vec<_> = lines.map(|l| parse_status_bits(l.unwrap())).collect();
-    println!("got binary numbers");
-    let bit_values = data_by_bit(binary_numbers);
-    println!("got bit values");
-    let zero_counts: Vec<usize> = bit_values
-        .iter()
-        .map(|values| count_value(&0, values))
-        .collect();
-    let most_common_bits: Vec<u8> = zero_counts
-        .iter()
-        .zip(bit_values.iter())
-        .map(|(num_zero, all)| if *num_zero > all.len() / 2 { 0u8 } else { 1u8 })
-        .collect();
-    let least_common_bits: Vec<u8> = most_common_bits
-        .iter()
-        .map(|b| if *b == 0 { 1u8 } else { 0u8 })
-        .collect();
-    let gamma = bit_vector_to_number(&most_common_bits);
-    let epsilon = bit_vector_to_number(&least_common_bits);
-    return (gamma, epsilon);
-}
-
-fn parse_status_bits(s: String) -> Vec<u8> {
-    s.chars().map(|c| c.to_digit(2).unwrap() as u8).collect()
-}
-
-fn data_by_bit(binary_numbers: Vec<Vec<u8>>) -> Vec<Vec<u8>> {
-    let num_bits = binary_numbers[0].len();
-
-    // this will return a vector with num_bits entries, each entry will have all the data points for that bit
-    let mut res = vec![Vec::<u8>::new(); num_bits];
-    for status_bits in binary_numbers {
-        for (idx, bit) in status_bits.iter().enumerate() {
-            res[idx].push(*bit);
-        }
-    }
-    return res;
-}
-
-fn count_value(value: &u8, data: &Vec<u8>) -> usize {
-    data.iter().filter(|x| *x == value).count()
-}
-
-fn bit_vector_to_number(bit_vector: &Vec<u8>) -> i32 {
-    let string_bits = bit_vector
-        .iter()
-        .map(|bit| bit.to_string())
-        .collect::<String>();
-    println!("{}", string_bits);
-    let val = i32::from_str_radix(&string_bits, 2).unwrap();
-    println!("as int {}", val);
-    return val;
 }
