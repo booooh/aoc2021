@@ -17,7 +17,7 @@ use crate::day5::day5part1;
 use crate::day6::{day6part1, day6part2};
 use crate::day7::{day7part1, day7part2};
 use crate::day8::{day8part1, day8part2};
-use crate::day9::day9part1;
+use crate::day9::{day9part1, day9part2};
 
 fn main() {
     // println!("day1part1 {}", day1part1());
@@ -35,7 +35,8 @@ fn main() {
     // println!("day7part2 {:?}", day7part2());
     // println!("day8part1 {:?}", day8part1());
     // println!("day8part2 {:?}", day8part2());
-    println!("day9part1 {:?}", day9part1());
+    // println!("day9part1 {:?}", day9part1());
+    println!("day9part2 {:?}", day9part2());
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
