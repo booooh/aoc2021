@@ -3,6 +3,8 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
+mod day9;
 
 use day3::day3part1;
 use std::fmt::Debug;
@@ -14,6 +16,8 @@ use crate::day4::{day4part1, day4part2};
 use crate::day5::day5part1;
 use crate::day6::{day6part1, day6part2};
 use crate::day7::{day7part1, day7part2};
+use crate::day8::{day8part1, day8part2};
+use crate::day9::day9part1;
 
 fn main() {
     // println!("day1part1 {}", day1part1());
@@ -27,8 +31,11 @@ fn main() {
     // println!("day5part1 {:?}", day5part1());
     // println!("day6part1 {:?}", day6part1());
     // println!("day6part2 {:?}", day6part2());
-    println!("day7part1 {:?}", day7part1());
-    println!("day7part2 {:?}", day7part2());
+    // println!("day7part1 {:?}", day7part1());
+    // println!("day7part2 {:?}", day7part2());
+    // println!("day8part1 {:?}", day8part1());
+    // println!("day8part2 {:?}", day8part2());
+    println!("day9part1 {:?}", day9part1());
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
