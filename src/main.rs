@@ -14,7 +14,7 @@ use std::io::BufRead;
 use std::{fs::File, io, path::Path};
 
 use crate::day10::{day10part1, day10part2};
-use crate::day11::day11part1;
+use crate::day11::{day11part1, day11part2};
 use crate::day3::day3part2;
 use crate::day4::{day4part1, day4part2};
 use crate::day5::day5part1;
@@ -43,7 +43,8 @@ fn main() {
     // println!("day9part2 {:?}", day9part2());
     // println!("day10part1 {:?}", day10part1());
     // println!("day10part2 {:?}", day10part2());
-    println!("day11part1 {:?}", day11part1());
+    // println!("day11part1 {:?}", day11part1());
+    println!("day11part2 {:?}", day11part2());
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
