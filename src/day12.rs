@@ -69,7 +69,12 @@ impl Graph {
     //     }
     // }
 
-    fn all_paths(&self, start: String, end: String, day2: bool) -> HashSet<Vec<String>> {
+    fn all_paths(
+        &self,
+        start: String,
+        end: String,
+        validation: fn(&String, &Vec<String>) -> bool,
+    ) -> HashSet<Vec<String>> {
         let mut visited = Vec::<String>::new();
         visited.push(start);
         let mut paths = HashSet::<Vec<String>>::new();
@@ -83,7 +88,8 @@ impl Graph {
             if possible_extensions.len() > next_index {
                 // check if valid:
                 let ext = &possible_extensions[next_index];
-                if &ext.to_uppercase() == ext || !visited.contains(ext) {
+                if validation(ext, &visited) {
+                    //if &ext.to_uppercase() == ext || !visited.contains(ext) {
                     visited.push(ext.to_string());
                     next_index = 0;
                 } else {
@@ -121,12 +127,38 @@ pub(crate) fn day12part1() -> usize {
     let mut lines = read_lines("input12.t").unwrap();
     let g = Graph::from_lines(lines);
     println!("{:?}", g);
-    let paths = g.all_paths("start".to_string(), "end".to_string(), false);
+    let paths = g.all_paths("start".to_string(), "end".to_string(), |ext, visited| {
+        &ext.to_uppercase() == ext || !visited.contains(ext)
+    });
     println!("{:?}", paths);
     return paths.len();
 }
 
 pub(crate) fn day12part2() -> usize {
     let mut lines = read_lines("input12.t").unwrap();
-    return 0;
+    let g = Graph::from_lines(lines);
+    fn validation(ext: &String, visited: &Vec<String>) -> bool {
+        if ext.chars().all(char::is_uppercase) {
+            return true;
+        }
+
+        if !visited.contains(ext) {
+            return true;
+        }
+
+        // if we got here, it's a small cave and already appears, check that there's no small cave that appears twice
+        let small_caves = visited
+            .iter()
+            .filter(|&x| x.chars().all(char::is_lowercase))
+            .collect::<Vec<_>>();
+        let unique_caves = HashSet::<&&String>::from_iter(small_caves.iter());
+
+        if unique_caves.len() == small_caves.len() {
+            return true;
+        }
+
+        return false;
+    }
+    let paths = g.all_paths("start".to_string(), "end".to_string(), validation);
+    return paths.len();
 }
