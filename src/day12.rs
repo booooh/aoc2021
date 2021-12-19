@@ -69,7 +69,7 @@ impl Graph {
     //     }
     // }
 
-    fn all_paths(&self, start: String, end: String) -> HashSet<Vec<String>> {
+    fn all_paths(&self, start: String, end: String, day2: bool) -> HashSet<Vec<String>> {
         let mut visited = Vec::<String>::new();
         visited.push(start);
         let mut paths = HashSet::<Vec<String>>::new();
@@ -121,7 +121,7 @@ pub(crate) fn day12part1() -> usize {
     let mut lines = read_lines("input12.t").unwrap();
     let g = Graph::from_lines(lines);
     println!("{:?}", g);
-    let paths = g.all_paths("start".to_string(), "end".to_string());
+    let paths = g.all_paths("start".to_string(), "end".to_string(), false);
     println!("{:?}", paths);
     return paths.len();
 }
